@@ -9,11 +9,11 @@ let height = parseInt(canvas.getAttribute('height')); //Parse the canvas height 
 let ctx = canvas.getContext('2d'); //Get the canvas context [2D]
 ctx.fillRect(0,0,width,height);
 
-var rows = 25; //Number of rows in the grid
-var columns = 25; //Number of columns in the grid
+var rows = 8; //Number of rows in the grid
+var columns = 8; //Number of columns in the grid
 var openSet = []; //Array to store the cells to be evaluated
 var closedSet = []; //Array to store the cells that have already been evaluated
-var grid= new Array(columns); //The 2D array to store the grid
+var grid = new Array(columns); //The 2D array to store the grid
 var start, goal; //Start and goal cells
 var cellWidth, cellHeight; //Cell width and height
 var path = []; //Array to store the path
@@ -39,14 +39,14 @@ function Cell(i,j)
 	this.f = function()
   {
     return this.g + this.h;
-  };
+  }
 
   this.neighbors = []; //Current cell's neighbors
   this.previous = null; //Current cell's parent
   this.wall = false; //Current cell is not a wall
   
   //Generate random walls with a 20 % probability
-  if (Math.random() < 0.3)
+  if (Math.random() < 0.2)
   {
     this.wall = true;
   }
@@ -80,12 +80,12 @@ function Cell(i,j)
 
     if(i < columns - 1) //If the current cell is not the last cell in the row
     {
-      this.neighbors.push(grid[i+1][j]);
+      this.neighbors.push(grid[i + 1][j]);
     }
 
     if(i > 0) //If the current cell is not the first cell in the row
     {
-      this.neighbors.push(grid[i-1][j]);
+      this.neighbors.push(grid[i - 1][j]);
     }
 
     if(j < rows - 1) //If the current cell is not the last cell in the column
@@ -220,7 +220,7 @@ function draw()
           openSet.push(neighbor); //Add the current cell's neighbor to the open set
         }
         
-				neighbor.f = neighbor.height + neighbor.g //Set the current cell's neighbor's f value
+				neighbor.f = neighbor.height + neighbor.g; //Set the current cell's neighbor's f value
         neighbor.previous = current; //Set the current cell as the current neighbor's previous cell
       }
     }
