@@ -19,7 +19,7 @@ var cellWidth, cellHeight; //Cell width and height
 var path = []; //Array to store the path
 
 //Heuristic function [Manhattan distance]
-function heuristics(a, b)
+function heuristics(a,b)
 {
   let h = Math.max(Math.abs(a.i - b.i), Math.abs(a.j - b.j));
   return h;
