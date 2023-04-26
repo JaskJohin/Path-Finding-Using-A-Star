@@ -1,5 +1,5 @@
 let canvas = document.getElementById('canvas');
-let status = document.getElementById('status');cellWidth
+let status = document.getElementById('status');
 canvas.setAttribute('width', '400px'); //Canvas width
 canvas.setAttribute('height', '400px'); //Canvas height
 
@@ -9,8 +9,8 @@ let height = parseInt(canvas.getAttribute('height')); //Parse the canvas height 
 let ctx = canvas.getContext('2d'); //Get the canvas context [2D]
 ctx.fillRect(0,0,width,height);
 
-var rows = 8; //Number of rows in the grid
-var columns = 8; //Number of columns in the grid
+var rows = 10; //Number of rows in the grid
+var columns = 10; //Number of columns in the grid
 var openSet = []; //Array to store the cells to be evaluated
 var closedSet = []; //Array to store the cells that have already been evaluated
 var grid = new Array(columns); //The 2D array to store the grid
@@ -18,7 +18,7 @@ var start, goal; //Start and goal cells
 var cellWidth, cellHeight; //Cell width and height
 var path = []; //Array to store the path
 
-//Heuristic function [Manhattan distance]
+//Heuristic function (Manhattan distance)
 function heuristics(a,b)
 {
   let h = Math.max(Math.abs(a.i - b.i), Math.abs(a.j - b.j));
@@ -32,10 +32,10 @@ function Cell(i,j)
 {
   this.i = i; //
   this.j = j; //
-  this.g = 0; // Distance from start
-  this.h = 0; // Distance from goal
+  this.g = 0; //Distance from start
+  this.h = 0; //Distance from goal
 
-  //Total cost function [f = g + h]
+  //Total cost function (f = g + h)
 	this.f = function()
   {
     return this.g + this.h;
@@ -45,8 +45,8 @@ function Cell(i,j)
   this.previous = null; //Current cell's parent
   this.wall = false; //Current cell is not a wall
   
-  //Generate random walls with a 20 % probability
-  if (Math.random() < 0.2)
+  //Generate random walls with a 30 % probability
+  if (Math.random() < 0.5)
   {
     this.wall = true;
   }
@@ -104,7 +104,7 @@ function Cell(i,j)
 function init()
 {
   cellWidth = width / columns; //Calculate the cell width
-  cellHeight = height / rows; // Calculate the cell height
+  cellHeight = height / rows; //Calculate the cell height
   
   //Construct a 2D grid
   for (let i = 0; i < columns; i++)
@@ -123,12 +123,12 @@ function init()
     }
   }
   
-  //Add the neighbors to each cell
+  //Add the neighbors for each cell
   for (let i = 0; i < columns; i++)
   {
     for (let j = 0; j < rows; j++)
     {
-      grid[i][j].addNeighbors(); //Add the neighbors to the current cell
+      grid[i][j].addNeighbors(); //Add the neighbors for the current cell
     }
   }
   
@@ -145,7 +145,7 @@ function draw()
 {
   let current = null; //Current cell to be evaluated
 
-	//If there are cells to be evaluated [There's an available path to the goal]
+	//If there are cells to be evaluated (There is an available path to the goal)
   if(openSet.length > 0)
   { 
     let lowestF = 0; //The index of the cell with the lowest f value in the open set
@@ -154,7 +154,7 @@ function draw()
     for (let i = 0; i < openSet.length; i++)
     {
       /*If the current cell has a lower f value than the cell with the lowest f value
-      [i = current cell, lowestF = cell with the lowest f value]*/
+      (i = current cell, lowestF = cell with the lowest f value)*/
       if(openSet[i].f < openSet[lowestF].f || openSet[i].f == openSet[lowestF].f && openSet[i].height < openSet[lowestF].height)
       {
         lowestF = i; //Set the current cell as the cell with the lowest f value
@@ -163,11 +163,11 @@ function draw()
     
     current = openSet[lowestF]; //Set the current cell to the cell with the lowest f value
   
-    //If the current cell is the goal cell
+    //If the current cell is the goal cell (Success!)
     if(current === goal)
     {
       status.innerText = "A path is found!";      
-      var tmp = current; //Temporary cell [Using var because tmp is function scoped]
+      var tmp = current; //Temporary cell (Using var because tmp is function scoped)
       path.push(tmp); //Add the current cell to the path
       
       //Add the previous cells to the path
@@ -180,7 +180,7 @@ function draw()
       //Draw the path
       for (let i = 0; i < path.length; i++)
       {
-          path[i].show('#0074D9'); //Path color [blue] 
+          path[i].show('#0074D9'); //Path color (blue)
       }
        
       cancelAnimationFrame(a); //Stop the animation
@@ -213,7 +213,6 @@ function draw()
 							neighbor.height = calcDistance(neighbor, goal);
           }
         }
-
         else
         {
           neighbor.g = tempG; //Set the current cell's neighbor's g value to the current cell's g value
@@ -234,7 +233,7 @@ function draw()
     return;
   }
   
-  //Draw the grid and the sets [openSet = green, closedSet = red]
+  //Draw the grid and the sets (openSet = green, closedSet = red)
   for (let i = 0; i < closedSet.length; i++)
   {
     closedSet[i].show('#FF4136'); //Color the closedSet red
