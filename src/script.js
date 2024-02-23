@@ -46,7 +46,7 @@ function Cell(i,j)
   this.wall = false; //Current cell is not a wall
   
   //Generate random walls with a 30 % probability
-  if (Math.random() < 0.5)
+  if (Math.random() < 0.2)
   {
     this.wall = true;
   }
